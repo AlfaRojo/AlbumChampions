@@ -1,0 +1,13 @@
+﻿
+@{
+    ViewBag.Title = "IndexEquipo";
+}
+
+<h2>Importar Estado Actual de Estampas </h2>
+<body>
+    @using (Html.BeginForm("IndexEquipo", "Album", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <input type="file" name="PostConseguidas" />
+        <input type="submit" value="Importar" />
+    }
+</body>
