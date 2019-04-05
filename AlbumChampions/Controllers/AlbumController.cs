@@ -121,7 +121,7 @@ namespace AlbumChampions.Models
                                     TradingList.Add(Valor);
                                 }
                             }
-                           
+
                             Datos.Instance.diccionarioEstampasAlbum.Add(Llave, new Album
                             {
                                 ListaFaltantes = ListRemaining,
@@ -143,7 +143,7 @@ namespace AlbumChampions.Models
         public ActionResult BusquedaTipo(Busqueda collection)
         {
             string Estampa = collection.Identificador;
-            return RedirectToAction("BusquedaTipoEstampa", new { TipoEstampaABuscar=Estampa});
+            return RedirectToAction("BusquedaTipoEstampa", new { TipoEstampaABuscar = Estampa });
         }
         public ActionResult BusquedaTipoEstampa(string TipoEstampaABuscar)
         {
@@ -151,13 +151,13 @@ namespace AlbumChampions.Models
             {
                 foreach (var author in Datos.Instance.diccionarioEstampasAlbum)
                 {
-                    if (author.Key==TipoEstampaABuscar)
+                    if (author.Key == TipoEstampaABuscar)
                     {
                         var result = String.Join(",", author.Value.ListaFaltantes.ToArray());
                         Datos.Instance.ListaAlbumMostrar.Add(new AlbumMostrar
                         {
-                            TipoEstampa=author.Key,
-                            Faltantes=result
+                            TipoEstampa = author.Key,
+                            Faltantes = result
                         });
                     }
                 }
@@ -206,7 +206,7 @@ namespace AlbumChampions.Models
                                 YaEnColeccion = "false"
                             });
                         }
-                       
+
                     }
                 }
                 return RedirectToAction("TablaColeccionMostrar");
@@ -219,6 +219,16 @@ namespace AlbumChampions.Models
         public ActionResult TablaColeccionMostrar()
         {
             return View(Datos.Instance.ListaEquipoMostrar);
+        }
+        [HttpGet]
+        public ActionResult Index()
+        {
+            List<SelectListItem> Lista = new List<SelectListItem>();
+            Lista.Add(new SelectListItem() { Text = "Prueba 1", Value = "1" });
+            Lista.Add(new SelectListItem() { Text = "Prueba 2", Value = "2" });
+            Lista.Add(new SelectListItem() { Text = "Prueba 3", Value = "3" });
+            Lista.Add(new SelectListItem() { Text = "Prueba 4", Value = "4" });
+            return View();
         }
     }
 }

@@ -12,3 +12,32 @@
     @Html.ValidationMessageFor(model => model.Identificador)
     <button type="submit">Buscar</button>
 }
+
+@using (Html.BeginForm("BusquedaColec", "Album", new { id = "PDF" }, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <div class="editor-field">
+            @Html.DropDownListFor(model => model.Identificador, Enumerable.Range(2000, 20).Select(x => new SelectListItem { Text = x.ToString() }))
+            @Html.ValidationMessageFor(model => model.Identificador)
+        </div>
+
+        <div class="editor-field">
+            @Html.DropDownList("Opcion", ViewBag.Opciones)
+        </div>
+
+        <p>
+            <input type="submit" value="Create" />
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

@@ -18,15 +18,18 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.TipoEstampa)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.YaEnColeccion)
-        </td>        
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TipoEstampa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.YaEnColeccion)
+            </td>
+        </tr>
+    }
 
 </table>
+<label>Escoja un Equipo:</label>
+@Html.DropDownList("MiDopDownList", (List<SelectListItem>)ViewBag.MiListado)

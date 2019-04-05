@@ -130,6 +130,7 @@
     <Compile Include="Models\AlbumMostrar.cs" />
     <Compile Include="Models\Auxiliar.cs" />
     <Compile Include="Models\Busqueda.cs" />
+    <Compile Include="Models\EquipoGuardado.cs" />
     <Compile Include="Models\EquipoMostrar.cs" />
     <Compile Include="Models\Equipo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
