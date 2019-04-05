@@ -1,0 +1,15 @@
+﻿@using AlbumChampions.Models
+
+@model Busqueda
+@{
+    ViewBag.Title = "BusquedaTipo";
+}
+
+<h2>Listado Estampas por Obtener de un Equipo</h2>
+
+@using (Html.BeginForm("BusquedaTipo", "Album", FormMethod.Post))
+{
+    @Html.TextBoxFor(model => model.Identificador)
+    @Html.ValidationMessageFor(model => model.Identificador)
+    <button type="submit">Buscar</button>
+}

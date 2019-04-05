@@ -18,11 +18,13 @@ namespace AlbumChampions.Helpers
                 }
             }
         }
-        public List<int> ListaFaltantesCont = new List<int>();
-        public List<int> ListaColeccionadasCont = new List<int>();
-        public List<int> ListaCambioCont = new List<int>();
-        public Dictionary<string,dynamic> diccionarioEstampasAlbum = new Dictionary<string, dynamic>();
+        //public List<int> ListaFaltantesCont = new List<int>();
+        //public List<int> ListaColeccionadasCont = new List<int>();
+        //public List<int> ListaCambioCont = new List<int>();
+        public Dictionary<string,Album> diccionarioEstampasAlbum = new Dictionary<string, Album>();
         public Dictionary<string, bool> diccionarioColeccionada = new Dictionary<string, bool>();
+        public List<AlbumMostrar> ListaAlbumMostrar = new List<AlbumMostrar>();
+        public List<EquipoMostrar> ListaEquipoMostrar = new List<EquipoMostrar>();
 
     }
 }

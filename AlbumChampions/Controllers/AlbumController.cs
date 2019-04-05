@@ -12,6 +12,10 @@ namespace AlbumChampions.Models
 {
     public class AlbumController : Controller
     {
+        public ActionResult Menu()
+        {
+            return View();
+        }
         // GET: Album
         public ActionResult IndexEquipo()
         {
@@ -37,27 +41,27 @@ namespace AlbumChampions.Models
                 {
                     if (!string.IsNullOrEmpty(fila))
                     {
-                        bool EstampaColeccionada=false;
-                        if (numeroAux !=0)
+                        bool EstampaColeccionada = false;
+                        if (numeroAux != 0)
                         {
                             String[] campos = fila.Split('|');
                             string identificador = campos[0];
                             string coleccionada = campos[1];
-                            if (coleccionada=="true\r")
+                            if (coleccionada == "true\r")
                             {
                                 EstampaColeccionada = true;
                             }
-                            else if (coleccionada=="false\r")
+                            else if (coleccionada == "false\r")
                             {
                                 EstampaColeccionada = false;
                             }
                             Datos.Instance.diccionarioColeccionada.Add(identificador, EstampaColeccionada);
-                        }                        
+                        }
                         numeroAux++;
                     }
                 }
             }
-            return View();
+            return RedirectToAction("Menu");
         }
         public ActionResult IndexAlbum()
         {
@@ -88,12 +92,15 @@ namespace AlbumChampions.Models
                             String[] fields = row.Split('|');
                             string Llave = fields[0];
                             string Faltantes = fields[1];
+                            var ListRemaining = new List<int>();
+                            var ListCollected = new List<int>();
+                            var TradingList = new List<int>();
                             if (!string.IsNullOrEmpty(Faltantes))
                             {
                                 foreach (var item in Faltantes.Split(','))
                                 {
                                     int Valor = Convert.ToInt32(item);
-                                    Datos.Instance.ListaFaltantesCont.Add(Valor);
+                                    ListRemaining.Add(Valor);
                                 }
                             }
                             string Coleccionadas = fields[2];
@@ -102,7 +109,7 @@ namespace AlbumChampions.Models
                                 foreach (var item in Coleccionadas.Split(','))
                                 {
                                     int Valor = Convert.ToInt32(item);
-                                    Datos.Instance.ListaColeccionadasCont.Add(Valor);
+                                    ListCollected.Add(Valor);
                                 }
                             }
                             string Cambios = fields[3];
@@ -111,14 +118,16 @@ namespace AlbumChampions.Models
                                 foreach (var item in Cambios.Split(','))
                                 {
                                     int Valor = Convert.ToInt32(item);
-                                    Datos.Instance.ListaCambioCont.Add(Valor);
+                                    TradingList.Add(Valor);
                                 }
                             }
-                            dynamic expandObject = new ExpandoObject();
-                            expandObject.ListaFaltantes = Datos.Instance.ListaFaltantesCont;
-                            expandObject.ListaColeccionadas = Datos.Instance.ListaColeccionadasCont;
-                            expandObject.ListaCambios = Datos.Instance.ListaCambioCont;
-                            Datos.Instance.diccionarioEstampasAlbum.Add(Llave,expandObject);
+                           
+                            Datos.Instance.diccionarioEstampasAlbum.Add(Llave, new Album
+                            {
+                                ListaFaltantes = ListRemaining,
+                                ListaColeccionadas = ListCollected,
+                                ListaCambios = TradingList,
+                            });
                         }
                         numeroAux++;
                     }
@@ -126,79 +135,90 @@ namespace AlbumChampions.Models
             }
             return RedirectToAction("IndexEquipo");
         }
-        public ActionResult TablaAlbum()
+        public ActionResult BusquedaTipo()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult TablaAlbum(FormCollection collection)
+        public ActionResult BusquedaTipo(Busqueda collection)
         {
-            return View();
+            string Estampa = collection.Identificador;
+            return RedirectToAction("BusquedaTipoEstampa", new { TipoEstampaABuscar=Estampa});
         }
-        // GET: Album/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-        // GET: Album/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-        // POST: Album/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
+        public ActionResult BusquedaTipoEstampa(string TipoEstampaABuscar)
         {
             try
             {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
+                foreach (var author in Datos.Instance.diccionarioEstampasAlbum)
+                {
+                    if (author.Key==TipoEstampaABuscar)
+                    {
+                        var result = String.Join(",", author.Value.ListaFaltantes.ToArray());
+                        Datos.Instance.ListaAlbumMostrar.Add(new AlbumMostrar
+                        {
+                            TipoEstampa=author.Key,
+                            Faltantes=result
+                        });
+                    }
+                }
+                return RedirectToAction("TablaEstadoAlbum");
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                throw new DriveNotFoundException();
             }
         }
-        // GET: Album/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult TablaEstadoAlbum()
+        {
+            return View(Datos.Instance.ListaAlbumMostrar);
+        }
+        public ActionResult BusquedaColec()
         {
             return View();
         }
-        // POST: Album/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        public ActionResult BusquedaColec(Busqueda collection)
+        {
+            string Estampa = collection.Identificador;
+            return RedirectToAction("BusquedaColeccion", new { TipoEstampaABuscar = Estampa });
+        }
+        public ActionResult BusquedaColeccion(string TipoEstampaABuscar)
         {
             try
             {
-                // TODO: Add update logic here
-
-                return RedirectToAction("Index");
+                foreach (KeyValuePair<string, bool> author in Datos.Instance.diccionarioColeccionada)
+                {
+                    if (author.Key.Contains(TipoEstampaABuscar))
+                    {
+                        if (author.Value)
+                        {
+                            Datos.Instance.ListaEquipoMostrar.Add(new EquipoMostrar
+                            {
+                                TipoEstampa = author.Key,
+                                YaEnColeccion = "true"
+                            });
+                        }
+                        else
+                        {
+                            Datos.Instance.ListaEquipoMostrar.Add(new EquipoMostrar
+                            {
+                                TipoEstampa = author.Key,
+                                YaEnColeccion = "false"
+                            });
+                        }
+                       
+                    }
+                }
+                return RedirectToAction("TablaColeccionMostrar");
             }
-            catch
+            catch (Exception)
             {
-                return View();
+                throw new DriveNotFoundException();
             }
         }
-        // GET: Album/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult TablaColeccionMostrar()
         {
-            return View();
-        }
-        // POST: Album/Delete/5
-        [HttpPost]
-        public ActionResult Delete(int id, FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
+            return View(Datos.Instance.ListaEquipoMostrar);
         }
     }
 }

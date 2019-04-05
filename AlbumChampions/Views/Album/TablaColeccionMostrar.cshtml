@@ -1,0 +1,32 @@
+﻿@model IEnumerable<AlbumChampions.Models.EquipoMostrar>
+
+@{
+    ViewBag.Title = "TablaColeccionMostrar";
+}
+
+<h2>Tabla de Estado de Estampas</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.TipoEstampa)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YaEnColeccion)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.TipoEstampa)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YaEnColeccion)
+        </td>        
+    </tr>
+}
+
+</table>
