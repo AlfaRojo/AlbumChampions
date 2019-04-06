@@ -1,0 +1,23 @@
+﻿@model AlbumChampions.Models.Busqueda
+
+@{
+    ViewBag.Title = "AgregarEstampa";
+}
+
+<h2>Agregar Estampa</h2>
+
+@using (Html.BeginForm("AgregarEstampa", "Album", FormMethod.Post))
+{
+<h>
+    Nombre Estampa
+    @Html.TextBoxFor(model => model.Identificador)
+    @Html.ValidationMessageFor(model => model.Identificador)
+</h>
+<h>
+    Numero Estampa
+    @Html.TextBoxFor(model => model.NumeroEstampa)
+    @Html.ValidationMessageFor(model => model.NumeroEstampa)
+</h>
+ 
+    <button type="submit">Buscar</button>
+}

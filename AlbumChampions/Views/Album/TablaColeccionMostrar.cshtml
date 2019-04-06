@@ -31,5 +31,11 @@
     }
 
 </table>
-<label>Escoja un Equipo:</label>
-@Html.DropDownList("MiDopDownList", (List<SelectListItem>)ViewBag.MiListado)
+<div>
+    <h4> @Html.ActionLink("Listado Estampas por Obtener de un Equipo", "BusquedaTipo")</h4>
+</div>
+<div>
+    <h4>@Html.ActionLink("Agregar Estampa Nueva a Coleccion", "AgregarEstampa")</h4>
+</div>
+@*<label>Escoja un Equipo:</label>
+@Html.DropDownList("MiDopDownList", (List<SelectListItem>)ViewBag.MiListado)*@

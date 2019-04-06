@@ -220,6 +220,63 @@ namespace AlbumChampions.Models
         {
             return View(Datos.Instance.ListaEquipoMostrar);
         }
+        public ActionResult AgregarEstampa()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult AgregarEstampa(Busqueda collection)
+        {
+            string TipoEstampa = collection.Identificador;
+            string Numero = collection.NumeroEstampa;
+            return RedirectToAction("AgregarEstampaALista", new { TipoEstampaABuscar = TipoEstampa, NumeroEstampa=Numero });
+        }
+        public ActionResult AgregarEstampaALista(string TipoEstampaABuscar, string NumeroEstampa)
+        {
+            try
+            {
+                foreach (var author in Datos.Instance.diccionarioEstampasAlbum)
+                {
+                    if (author.Key == TipoEstampaABuscar)
+                    {
+                        int NumeroABuscar = Convert.ToInt32(NumeroEstampa);
+                        if (author.Value.ListaFaltantes.Contains(NumeroABuscar))
+                        {
+                            author.Value.ListaFaltantes.Remove(NumeroABuscar);
+                            author.Value.ListaColeccionadas.Add(NumeroABuscar);
+                            author.Value.ListaColeccionadas.Sort();
+                        }
+                        var result = String.Join(",", author.Value.ListaFaltantes.ToArray());
+                        foreach (var item in Datos.Instance.ListaAlbumMostrar)
+                        {
+                            if (item.TipoEstampa == TipoEstampaABuscar)
+                            {
+                                item.Faltantes = result;
+                            }                           
+                        }
+                        
+                    }
+                }
+                string IdentificadorEstampaEspecifica = TipoEstampaABuscar + "_" + NumeroEstampa;
+                if (Datos.Instance.diccionarioColeccionada.ContainsKey(IdentificadorEstampaEspecifica))
+                {
+                    Datos.Instance.diccionarioColeccionada.Remove(IdentificadorEstampaEspecifica);
+                    Datos.Instance.diccionarioColeccionada.Add(IdentificadorEstampaEspecifica, true);
+                }
+                foreach (var item in Datos.Instance.ListaEquipoMostrar)
+                {
+                    if (item.TipoEstampa== IdentificadorEstampaEspecifica)
+                    {
+                        item.YaEnColeccion = "true";
+                    }
+                }
+                return RedirectToAction("TablaEstadoAlbum");
+            }
+            catch (Exception)
+            {
+                throw new DriveNotFoundException();
+            }
+        }
         [HttpGet]
         public ActionResult Index()
         {
