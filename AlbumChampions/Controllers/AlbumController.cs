@@ -149,6 +149,7 @@ namespace AlbumChampions.Models
         {
             try
             {
+                Datos.Instance.ListaAlbumMostrar = new List<AlbumMostrar>();
                 foreach (var author in Datos.Instance.diccionarioEstampasAlbum)
                 {
                     if (author.Key == TipoEstampaABuscar)
@@ -186,6 +187,7 @@ namespace AlbumChampions.Models
         {
             try
             {
+                Datos.Instance.ListaEquipoMostrar = new List<EquipoMostrar>();
                 foreach (KeyValuePair<string, bool> author in Datos.Instance.diccionarioColeccionada)
                 {
                     if (author.Key.Contains(TipoEstampaABuscar))
@@ -208,7 +210,7 @@ namespace AlbumChampions.Models
                         }
                     }
                 }
-                return RedirectToAction("TablaColeccionMostrar");
+                return RedirectToAction("TablaColeccionMostrar"/*, new { Estampas = TipoEstampaABuscar }*/);
             }
             catch (Exception)
             {
@@ -219,6 +221,19 @@ namespace AlbumChampions.Models
         {
             return View(Datos.Instance.ListaEquipoMostrar);
         }
+        //[HttpPost]
+        //public ActionResult TablaColeccionMostrar(string Estampas)
+        //{
+        //    var ListaparaMostrar = new List<EquipoMostrar>();
+        //    foreach (var item in Datos.Instance.ListaEquipoMostrar)
+        //    {
+        //        if (item.TipoEstampa.Contains(Estampas))
+        //        {
+        //            ListaparaMostrar.Add(item);
+        //        }
+        //    }
+        //    return View(ListaparaMostrar);
+        //}
         public ActionResult AgregarEstampa()
         {
             return View();
@@ -269,7 +284,7 @@ namespace AlbumChampions.Models
                         item.YaEnColeccion = "true";
                     }
                 }
-                return RedirectToAction("TablaEstadoAlbum");
+                return RedirectToAction("Menu");
             }
             catch (Exception)
             {
