@@ -9,6 +9,5 @@ namespace AlbumChampions.Models
     {
         public string Identificador { get; set; }
         public string NumeroEstampa { get; set; }
-
     }
 }

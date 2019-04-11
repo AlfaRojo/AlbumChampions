@@ -6,6 +6,8 @@
 
 <h2>Consultar Si Posee Estampa</h2>
 
+<p>Equipos Totales: @ViewBag.Llaves</p>
+
 @using (Html.BeginForm("BusquedaColec", "Album", FormMethod.Post))
 {
     @Html.TextBoxFor(model => model.Identificador)
@@ -16,33 +18,7 @@
 <div>
     @Html.ActionLink("Regresar", "Menu")
 </div>
-    <button type="submit">Buscar</button>
-}
-
-@*@using (Html.BeginForm("BusquedaColec", "Album", new { id = "PDF" }, FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    @Html.ValidationSummary(true)
-
-    <fieldset>
-        <div class="editor-field">
-            @Html.DropDownListFor(model => model.Identificador, Enumerable.Range(2000, 20).Select(x => new SelectListItem { Text = x.ToString() }))
-            @Html.ValidationMessageFor(model => model.Identificador)
-        </div>
-
-        <div class="editor-field">
-            @Html.DropDownList("Opcion", ViewBag.Opciones)
-        </div>
-
-        <p>
-            <input type="submit" value="Create" />
-        </p>
-    </fieldset>
-}*@
-
-@*<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>*@
+<button type="submit">Buscar</button>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
