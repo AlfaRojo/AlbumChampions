@@ -121,7 +121,6 @@ namespace AlbumChampions.Models
                                     TradingList.Add(Valor);
                                 }
                             }
-
                             Datos.Instance.diccionarioEstampasAlbum.Add(Llave, new Album
                             {
                                 ListaFaltantes = ListRemaining,
@@ -130,6 +129,7 @@ namespace AlbumChampions.Models
                             });
                         }
                         numeroAux++;
+                        ViewData["Valor"] = numeroAux;
                     }
                 }
             }
@@ -178,7 +178,7 @@ namespace AlbumChampions.Models
         }
         [HttpPost]
         public ActionResult BusquedaColec(Busqueda collection)
-        {
+        {            
             string Estampa = collection.Identificador;
             return RedirectToAction("BusquedaColeccion", new { TipoEstampaABuscar = Estampa });
         }
@@ -206,7 +206,6 @@ namespace AlbumChampions.Models
                                 YaEnColeccion = "false"
                             });
                         }
-
                     }
                 }
                 return RedirectToAction("TablaColeccionMostrar");
@@ -219,16 +218,6 @@ namespace AlbumChampions.Models
         public ActionResult TablaColeccionMostrar()
         {
             return View(Datos.Instance.ListaEquipoMostrar);
-        }
-        [HttpGet]
-        public ActionResult Index()
-        {
-            List<SelectListItem> Lista = new List<SelectListItem>();
-            Lista.Add(new SelectListItem() { Text = "Prueba 1", Value = "1" });
-            Lista.Add(new SelectListItem() { Text = "Prueba 2", Value = "2" });
-            Lista.Add(new SelectListItem() { Text = "Prueba 3", Value = "3" });
-            Lista.Add(new SelectListItem() { Text = "Prueba 4", Value = "4" });
-            return View();
         }
     }
 }
