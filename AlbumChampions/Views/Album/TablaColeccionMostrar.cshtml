@@ -4,7 +4,7 @@
     ViewBag.Title = "TablaColeccionMostrar";
 }
 
-<h2>Tabla de Estado de Estampas</h2>
+<h2>Tabla De Estampas Faltantes</h2>
 
 <table class="table">
     <tr>
@@ -29,9 +29,10 @@
         </tr>
     }
 </table>
+
 <div>
-    <h4> @Html.ActionLink("Listado Estampas por Obtener de un Equipo", "BusquedaTipo")</h4>
+    <h6>@Html.ActionLink("Agregar Estampa Nueva a Coleccion", "AgregarEstampa")</h6>
 </div>
 <div>
-    <h4>@Html.ActionLink("Agregar Estampa Nueva a Coleccion", "AgregarEstampa")</h4>
+    @Html.ActionLink("Regresar", "Menu")
 </div>

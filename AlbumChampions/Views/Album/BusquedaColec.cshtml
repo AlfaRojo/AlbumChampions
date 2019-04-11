@@ -4,7 +4,7 @@
     ViewBag.Title = "BusquedaColec";
 }
 
-<h2>Consultar Si Posee Estampa</h2>
+<h2>Consultar Que Estampas Posee</h2>
 
 
 @using (Html.BeginForm("BusquedaColec", "Album", FormMethod.Post))
@@ -17,8 +17,6 @@
 <div>
     @Html.ActionLink("Regresar", "Menu")
 </div>
-<button type="submit">Buscar</button>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
