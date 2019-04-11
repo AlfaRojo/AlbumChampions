@@ -91,6 +91,7 @@ namespace AlbumChampions.Models
                         {
                             String[] fields = row.Split('|');
                             string Llave = fields[0];
+                            ViewBag.Llaves = Llave.Count();
                             string Faltantes = fields[1];
                             var ListRemaining = new List<int>();
                             var ListCollected = new List<int>();
@@ -129,7 +130,6 @@ namespace AlbumChampions.Models
                             });
                         }
                         numeroAux++;
-                        ViewData["Valor"] = numeroAux;
                     }
                 }
             }
