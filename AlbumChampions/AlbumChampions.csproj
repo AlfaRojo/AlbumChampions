@@ -216,6 +216,7 @@
     <Content Include="Views\Album\TablaColeccionMostrar.cshtml" />
     <Content Include="Views\Album\BusquedaTipo.cshtml" />
     <Content Include="Views\Album\BusquedaColec.cshtml" />
+    <Content Include="Views\Album\AgregarEstampa.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

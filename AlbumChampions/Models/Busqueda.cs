@@ -8,5 +8,7 @@ namespace AlbumChampions.Models
     public class Busqueda
     {
         public string Identificador { get; set; }
+        public string NumeroEstampa { get; set; }
+
     }
 }
